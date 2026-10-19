@@ -327,13 +327,19 @@ footer { padding-block: 2rem 2.5rem; }
 }
 
 /* ---------- Reviews ---------- */
-.reviews { display: grid; gap: 18px; margin-inline: calc(-1 * clamp(16px, 4vw, 40px)); mask-image: linear-gradient(to left, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(to left, transparent, #000 8%, #000 92%, transparent); }
-.marquee { overflow: hidden; padding-block: 10px; }
-.mq-track { display: flex; gap: 18px; width: max-content; animation: tick 46s linear infinite; padding-inline: 9px; }
-.marquee.rev .mq-track { animation-direction: reverse; animation-duration: 52s; }
-.marquee:hover .mq-track { animation-play-state: paused; }
-.review { margin: 0; width: min(360px, 78vw); flex-shrink: 0; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 1.4rem 1.5rem 1.2rem; display: grid; gap: 1rem; align-content: space-between; position: relative; transition: transform .4s var(--spring), box-shadow .3s, border-color .3s; }
-.review:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 26px 46px -30px rgba(18,36,95,.6); border-color: var(--blue-soft); }
+.reviews { display: grid; gap: 1.2rem; }
+.rv-viewport { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 10px 4px 18px; scrollbar-width: none; overscroll-behavior-x: contain; }
+.rv-viewport::-webkit-scrollbar { display: none; }
+.rv-viewport:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; border-radius: 24px; }
+.rv-controls { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+.ctrl:disabled { opacity: .35; cursor: default; transform: none; background: var(--card); color: var(--navy); }
+.rv-dots { display: flex; gap: .4rem; }
+.rv-dots button { width: 10px; height: 10px; border-radius: 99px; border: 0; padding: 0; background: var(--line); cursor: pointer; transition: width .4s var(--ease), background .3s; }
+.rv-dots button[aria-current="true"] { width: 32px; background: var(--red); }
+.rv-dots button:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.review { margin: 0; scroll-snap-align: start; flex: 0 0 calc((100% - 36px) / 3); min-width: 0; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 1.4rem 1.5rem 1.2rem; display: grid; gap: 1rem; align-content: space-between; position: relative; transition: transform .45s var(--spring), box-shadow .3s, border-color .3s, opacity .4s; }
+.review.dim { opacity: .55; transform: scale(.97); }
+.review:hover { transform: translateY(-6px); box-shadow: 0 26px 46px -30px rgba(18,36,95,.6); border-color: var(--blue-soft); }
 .review .q { color: var(--red); opacity: .9; }
 .review blockquote { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 1.08rem; line-height: 1.75; color: var(--ink); }
 .review figcaption { display: flex; align-items: center; gap: .7rem; border-top: 1px dashed var(--line); padding-top: .9rem; }
@@ -349,6 +355,7 @@ footer { padding-block: 2rem 2.5rem; }
 .review.client .who b { color: #fff; }
 
 @media (max-width: 960px) {
+  .review { flex-basis: calc((100% - 18px) / 2); }
   .links a.l { display: none; }
   .hero { grid-template-columns: 1fr; }
   .target-hero { width: min(100%, 300px); order: -1; }
@@ -362,6 +369,7 @@ footer { padding-block: 2rem 2.5rem; }
   .big-logo { display: none; }
 }
 @media (max-width: 540px) {
+  .review { flex-basis: 86%; }
   .float.f1 { inset-inline-start: 0; }
   .stats { gap: 12px; }
   .stat { padding: 1.1rem; }
@@ -374,9 +382,7 @@ footer { padding-block: 2rem 2.5rem; }
   .brand small { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .mq-track { flex-wrap: wrap; width: auto; justify-content: center; }
-  .review[aria-hidden="true"] { display: none; }
-  .reviews { mask-image: none; -webkit-mask-image: none; margin-inline: 0; }
+  .rv-viewport { scroll-behavior: auto; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .rotator span:first-child { opacity: 1; }
@@ -501,8 +507,12 @@ footer { padding-block: 2rem 2.5rem; }
         <p>تعليقات حقيقية من العملاء والمتابعين على السوشيال ميديا.</p>
       </div>
       <div class="reviews rv">
-        <div class="marquee"><div class="mq-track"><figure class="review client"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>اكتر حد شاطر في السوشيال ميديا احسن حد يعمل إعلانات بجد</blockquote><figcaption><span class="av">ف</span><span class="who"><b class="">فراولة بيوتي سنتر</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review client"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>شغله محترم وكويس وهو شخص محترم ربنا يكرمه ❤️</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">ASEO OIL</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من افضل الناس اللي بتعمل حملات اعلانية بجد .. دا غير انه حد موثوق منه</blockquote><figcaption><span class="av">N</span><span class="who"><b class="en">Neuro Ahmed</b></span></figcaption></figure><figure class="review client" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>اكتر حد شاطر في السوشيال ميديا احسن حد يعمل إعلانات بجد</blockquote><figcaption><span class="av">ف</span><span class="who"><b class="">فراولة بيوتي سنتر</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review client" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>شغله محترم وكويس وهو شخص محترم ربنا يكرمه ❤️</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">ASEO OIL</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من افضل الناس اللي بتعمل حملات اعلانية بجد .. دا غير انه حد موثوق منه</blockquote><figcaption><span class="av">N</span><span class="who"><b class="en">Neuro Ahmed</b></span></figcaption></figure><figure class="review client" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>اكتر حد شاطر في السوشيال ميديا احسن حد يعمل إعلانات بجد</blockquote><figcaption><span class="av">ف</span><span class="who"><b class="">فراولة بيوتي سنتر</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review client" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>شغله محترم وكويس وهو شخص محترم ربنا يكرمه ❤️</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">ASEO OIL</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من افضل الناس اللي بتعمل حملات اعلانية بجد .. دا غير انه حد موثوق منه</blockquote><figcaption><span class="av">N</span><span class="who"><b class="en">Neuro Ahmed</b></span></figcaption></figure><figure class="review client" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>اكتر حد شاطر في السوشيال ميديا احسن حد يعمل إعلانات بجد</blockquote><figcaption><span class="av">ف</span><span class="who"><b class="">فراولة بيوتي سنتر</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review client" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>شغله محترم وكويس وهو شخص محترم ربنا يكرمه ❤️</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">ASEO OIL</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من افضل الناس اللي بتعمل حملات اعلانية بجد .. دا غير انه حد موثوق منه</blockquote><figcaption><span class="av">N</span><span class="who"><b class="en">Neuro Ahmed</b></span></figcaption></figure></div></div>
-        <div class="marquee rev"><div class="mq-track"><figure class="review"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من أشطر الناس في مجاله بجد 🤎</blockquote><figcaption><span class="av">S</span><span class="who"><b class="en">Sara Khaled</b></span></figcaption></figure><figure class="review"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>بالتوفيق يا هندسه نتايج محترمة جدًا وأمانه مفيش احسن من كده</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">Abdelrahman Yasser</b></span></figcaption></figure><figure class="review"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>مجرب و موثوق منه جدا ما شاء الله عليه</blockquote><figcaption><span class="av">J</span><span class="who"><b class="en">Jo CJ</b></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من أشطر الناس في مجاله بجد 🤎</blockquote><figcaption><span class="av">S</span><span class="who"><b class="en">Sara Khaled</b></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>بالتوفيق يا هندسه نتايج محترمة جدًا وأمانه مفيش احسن من كده</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">Abdelrahman Yasser</b></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>مجرب و موثوق منه جدا ما شاء الله عليه</blockquote><figcaption><span class="av">J</span><span class="who"><b class="en">Jo CJ</b></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من أشطر الناس في مجاله بجد 🤎</blockquote><figcaption><span class="av">S</span><span class="who"><b class="en">Sara Khaled</b></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>بالتوفيق يا هندسه نتايج محترمة جدًا وأمانه مفيش احسن من كده</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">Abdelrahman Yasser</b></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>مجرب و موثوق منه جدا ما شاء الله عليه</blockquote><figcaption><span class="av">J</span><span class="who"><b class="en">Jo CJ</b></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من أشطر الناس في مجاله بجد 🤎</blockquote><figcaption><span class="av">S</span><span class="who"><b class="en">Sara Khaled</b></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>بالتوفيق يا هندسه نتايج محترمة جدًا وأمانه مفيش احسن من كده</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">Abdelrahman Yasser</b></span></figcaption></figure><figure class="review" aria-hidden="true"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>مجرب و موثوق منه جدا ما شاء الله عليه</blockquote><figcaption><span class="av">J</span><span class="who"><b class="en">Jo CJ</b></span></figcaption></figure></div></div>
+        <div class="rv-viewport" id="rvView" tabindex="0" aria-label="آراء العملاء"><figure class="review client" role="group" aria-roledescription="رأي" aria-label="1 من 6"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>اكتر حد شاطر في السوشيال ميديا احسن حد يعمل إعلانات بجد</blockquote><figcaption><span class="av">ف</span><span class="who"><b class="">فراولة بيوتي سنتر</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review client" role="group" aria-roledescription="رأي" aria-label="2 من 6"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>شغله محترم وكويس وهو شخص محترم ربنا يكرمه ❤️</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">ASEO OIL</b><span class="rv-tag">عميل</span></span></figcaption></figure><figure class="review" role="group" aria-roledescription="رأي" aria-label="3 من 6"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من افضل الناس اللي بتعمل حملات اعلانية بجد .. دا غير انه حد موثوق منه</blockquote><figcaption><span class="av">N</span><span class="who"><b class="en">Neuro Ahmed</b></span></figcaption></figure><figure class="review" role="group" aria-roledescription="رأي" aria-label="4 من 6"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>من أشطر الناس في مجاله بجد 🤎</blockquote><figcaption><span class="av">S</span><span class="who"><b class="en">Sara Khaled</b></span></figcaption></figure><figure class="review" role="group" aria-roledescription="رأي" aria-label="5 من 6"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>بالتوفيق يا هندسه نتايج محترمة جدًا وأمانه مفيش احسن من كده</blockquote><figcaption><span class="av">A</span><span class="who"><b class="en">Abdelrahman Yasser</b></span></figcaption></figure><figure class="review" role="group" aria-roledescription="رأي" aria-label="6 من 6"><svg class="q" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1.5 12 0l1.5 3.5C9 5 7 8 7 12h5v12H0zm17 0V14c0-8 4-12.5 12-14l1 3.5C25.5 5 24 8 24 12h5v12H17z" fill="currentColor"/></svg><blockquote>مجرب و موثوق منه جدا ما شاء الله عليه</blockquote><figcaption><span class="av">J</span><span class="who"><b class="en">Jo CJ</b></span></figcaption></figure></div>
+        <div class="rv-controls">
+          <button class="ctrl" id="rvPrev" type="button" aria-label="الرأي اللي قبله"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+          <div class="rv-dots" id="rvDots" role="group" aria-label="اختار رأي"></div>
+          <button class="ctrl" id="rvNext" type="button" aria-label="الرأي اللي بعده"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        </div>
       </div>
     </section>
 
@@ -829,6 +839,44 @@ footer { padding-block: 2rem 2.5rem; }
       b.addEventListener('mouseleave', function () { b.style.transform = ''; });
     });
   }
+
+
+  /* ---------- reviews slider ---------- */
+  var rvView = document.getElementById('rvView'), rvCards = rvView.children, rvDots = document.getElementById('rvDots');
+  var rvPrev = document.getElementById('rvPrev'), rvNext = document.getElementById('rvNext'), rvIdx = 0;
+  function rvStep() { return rvCards[0].getBoundingClientRect().width + 18; }
+  function rvPerView() { return Math.max(1, Math.round(rvView.clientWidth / rvStep())); }
+  function rvMax() { return Math.max(0, rvCards.length - rvPerView()); }
+  function rvSync() {
+    var max = rvView.scrollWidth - rvView.clientWidth, pos = Math.abs(rvView.scrollLeft);
+    rvIdx = Math.min(rvMax(), Math.round(pos / rvStep()));
+    rvPrev.disabled = pos < 12; rvNext.disabled = pos > max - 12;
+    var pv = rvPerView();
+    Array.prototype.forEach.call(rvCards, function (c, j) { c.classList.toggle('dim', j < rvIdx || j >= rvIdx + pv); });
+    Array.prototype.forEach.call(rvDots.children, function (d, j) { d.setAttribute('aria-current', j === rvIdx ? 'true' : 'false'); });
+  }
+  function rvBuildDots() {
+    rvDots.innerHTML = '';
+    for (var j = 0; j <= rvMax(); j++) (function (j) {
+      var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'رأي ' + (j + 1));
+      b.addEventListener('click', function () { rvScrollTo(j); }); rvDots.appendChild(b);
+    })(j);
+    rvSync();
+  }
+  function rvScrollTo(j) {
+    j = Math.max(0, Math.min(rvMax(), j));
+    var dir = getComputedStyle(rvView).direction === 'rtl' ? -1 : 1;
+    rvView.scrollTo({ left: dir * j * rvStep(), behavior: reduce ? 'auto' : 'smooth' });
+  }
+  rvPrev.addEventListener('click', function () { rvScrollTo(rvIdx - 1); });
+  rvNext.addEventListener('click', function () { rvScrollTo(rvIdx + 1); });
+  rvView.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); rvScrollTo(rvIdx + 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); rvScrollTo(rvIdx - 1); }
+  });
+  var rvT; rvView.addEventListener('scroll', function () { clearTimeout(rvT); rvT = setTimeout(rvSync, 60); rvSync(); }, { passive: true });
+  window.addEventListener('resize', rvBuildDots);
+  rvBuildDots();
 
   document.getElementById('copy').addEventListener('click', function () {
     var b = this, t = document.getElementById('phone');
