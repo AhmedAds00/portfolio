@@ -178,7 +178,7 @@ section.block { padding-block: clamp(72px, 10vw, 120px) 0; scroll-margin-top: 20
 .head p { color: var(--muted); }
 
 /* ---------- Client deck ---------- */
-.clients { display: grid; grid-template-columns: 1.25fr .75fr; gap: clamp(24px, 4vw, 48px); align-items: center; }
+.clients { display: grid; gap: 1.4rem; max-width: 760px; margin-inline: auto; }
 .deck { display: grid; position: relative; padding-inline-end: 14%; padding-bottom: 40px; perspective: 1400px; touch-action: pan-y; min-width: 0; }
 .card {
   grid-area: 1 / 1; border-radius: 28px; padding: clamp(1.3rem, 3vw, 2rem); display: grid; gap: 1.15rem; align-content: start;
@@ -240,11 +240,8 @@ section.block { padding-block: clamp(72px, 10vw, 120px) 0; scroll-margin-top: 20
 .card[data-o="0"] .c-note { animation-delay: .24s; }
 @keyframes cardIn { from { opacity: 0; transform: translateY(18px); } }
 
-.side { display: grid; gap: 1.1rem; justify-items: center; min-width: 0; }
-.side svg { width: 100%; max-width: 330px; height: auto; overflow: visible; }
-.ring-label { font: 600 9px var(--font-display); }
-.legend { font-size: .85rem; color: var(--muted); text-align: center; }
-.legend b { color: var(--red); font-family: var(--font-display); }
+.side { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .9rem 1.4rem; min-width: 0; }
+.side .hint { flex-basis: 100%; text-align: center; }
 .controls { display: flex; align-items: center; gap: .8rem; }
 .ctrl { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--navy); cursor: pointer; display: grid; place-items: center; transition: background .25s, color .25s, transform .3s var(--spring); }
 .ctrl:hover { background: var(--navy); color: #fff; transform: scale(1.1); }
@@ -335,9 +332,6 @@ footer { padding-block: 2rem 2.5rem; }
   .hero { grid-template-columns: 1fr; }
   .target-hero { width: min(100%, 300px); order: -1; }
   .stats { grid-template-columns: repeat(2, 1fr); }
-  .clients { grid-template-columns: 1fr; }
-  .side { order: 2; gap: .8rem; }
-  .side svg { max-width: 190px; }
   .clients { gap: 18px; }
   .steps { grid-template-columns: repeat(2, 1fr); row-gap: 48px; }
   .steps::before { display: none; }
@@ -385,8 +379,7 @@ footer { padding-block: 2rem 2.5rem; }
   .c-head h3 { font-size: 1.15rem; }
   .c-big .big { font-size: clamp(2.8rem, 15vw, 3.6rem); }
   .c-note { font-size: .9rem; }
-  .side svg { max-width: 160px; }
-  .legend, .hint { font-size: .78rem; }
+  .hint { font-size: .78rem; }
   .ctrl { width: 44px; height: 44px; }
   .dot, .rv-dots button { position: relative; }
   .dot::after, .rv-dots button::after { content: ""; position: absolute; inset: -12px -4px; }
@@ -501,7 +494,7 @@ footer { padding-block: 2rem 2.5rem; }
       <div class="head rv">
         <div>
           <span class="kicker">نتايج العملاء</span>
-          <h2 id="work">كل كارت عميل، وكل سهم نتيجة</h2>
+          <h2 id="work">كل كارت عميل، وكل رقم نتيجة</h2>
         </div>
         <p>كل الأرقام من حساب Meta Ads زي ما هي.<br>كل الحملات هدفها رسائل.</p>
       </div>
@@ -510,28 +503,6 @@ footer { padding-block: 2rem 2.5rem; }
         <div class="deck" id="deck" aria-roledescription="عرض العملاء" aria-live="polite"></div>
 
         <div class="side">
-          <svg viewBox="-40 -40 380 380" role="img" aria-label="هدف بيوضح تكلفة المحادثة: كل ما السهم قرب من النص كل ما المحادثة أرخص">
-            <circle cx="150" cy="150" r="130" fill="#e0463b"/>
-            <circle cx="150" cy="150" r="104" fill="#ffffff"/>
-            <circle cx="150" cy="150" r="78" fill="#e0463b"/>
-            <circle cx="150" cy="150" r="52" fill="#ffffff"/>
-            <circle cx="150" cy="150" r="26" fill="#2c4ea3"/>
-            <g class="ring-label" text-anchor="middle">
-              <text x="150" y="31" fill="#ffffff">$0.25</text>
-              <text x="150" y="57" fill="#12245f">$0.20</text>
-              <text x="150" y="83" fill="#ffffff">$0.15</text>
-              <text x="150" y="109" fill="#12245f">$0.10</text>
-              <text x="150" y="135" fill="#ffffff">$0.05</text>
-            </g>
-            <g id="marks"></g>
-            <circle id="hit" cx="150" cy="150" r="0" fill="none" stroke="#12245f" stroke-width="3"/>
-            <g id="arrow">
-              <line x1="0" y1="0" x2="92" y2="0" stroke="#12245f" stroke-width="5" stroke-linecap="round"/>
-              <path d="M78 0 L96 -11 L104 -11 L88 0 L104 11 L96 11 Z" fill="#12245f" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M-2 0 L12 -7 L12 7 Z" fill="#12245f" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
-            </g>
-          </svg>
-          <p class="legend">السهم أقرب للنص = محادثة أرخص · <b class="num" id="legendCpc">$0.04</b></p>
           <div class="controls">
             <button class="ctrl" id="prev" type="button" aria-label="العميل اللي قبله"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
             <span class="counter num" id="counter"><span>01</span> / 07</span>
@@ -746,40 +717,6 @@ footer { padding-block: 2rem 2.5rem; }
   });
   var cards = deck.children, dots = dotsBox.children;
 
-  /* target: faint marks for every client, plus the live arrow */
-  var marks = document.getElementById('marks'), arrow = document.getElementById('arrow'), hit = document.getElementById('hit');
-  var R = 130 / 0.25;
-  function angleFor(i) { return (-150 + i * (300 / N)) * Math.PI / 180; }
-  function posFor(i) { var k = CLIENTS[i], r = Math.min(k.cpc, .25) * R, a = angleFor(i); return { x: 150 + r * Math.cos(a), y: 150 + r * Math.sin(a), a: a }; }
-  CLIENTS.forEach(function (k, i) {
-    var p = posFor(i), c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('r', 4.5);
-    c.setAttribute('fill', '#12245f'); c.setAttribute('stroke', '#ffffff'); c.setAttribute('stroke-width', 1.5); c.setAttribute('opacity', .35);
-    marks.appendChild(c);
-  });
-  function shoot(i, animate) {
-    var p = posFor(i), deg = p.a * 180 / Math.PI;
-    Array.prototype.forEach.call(marks.children, function (m, j) { m.setAttribute('opacity', j === i ? 0 : .35); });
-    function set(off) { arrow.setAttribute('transform', 'translate(' + (p.x + off * Math.cos(p.a)) + ' ' + (p.y + off * Math.sin(p.a)) + ') rotate(' + deg + ')'); }
-    hit.setAttribute('cx', p.x); hit.setAttribute('cy', p.y);
-    if (!animate || reduce) { set(0); hit.setAttribute('r', 10); hit.setAttribute('opacity', .5); return; }
-    var t0 = performance.now(); hit.setAttribute('r', 0);
-    (function step(t) {
-      var q = Math.min(1, (t - t0) / 600), e = 1 - Math.pow(1 - q, 4);
-      set(280 * (1 - e));
-      if (q < 1) requestAnimationFrame(step);
-      else {
-        var t1 = performance.now();
-        (function s2(t) {
-          var u = Math.min(1, (t - t1) / 650);
-          hit.setAttribute('r', 4 + u * 18); hit.setAttribute('opacity', 1 - u * .65);
-          arrow.setAttribute('transform', 'translate(' + p.x + ' ' + p.y + ') rotate(' + (deg + Math.sin(u * 18) * (1 - u) * 4) + ')');
-          if (u < 1) requestAnimationFrame(s2);
-        })(t1);
-      }
-    })(t0);
-  }
-
   var cur = 0, auto = !reduce, timer = null, prog = null, DUR = 6000;
   function layout() {
     for (var j = 0; j < N; j++) {
@@ -790,7 +727,6 @@ footer { padding-block: 2rem 2.5rem; }
       dots[j].setAttribute('aria-current', j === cur ? 'true' : 'false');
     }
     document.getElementById('counter').innerHTML = '<span>' + pad(cur + 1) + '</span> / ' + pad(N);
-    document.getElementById('legendCpc').textContent = '$' + fmt(CLIENTS[cur].cpc, 2);
   }
   function animateCard(i) {
     cards[i].querySelectorAll('[data-to]').forEach(function (el) {
@@ -799,7 +735,7 @@ footer { padding-block: 2rem 2.5rem; }
   }
   function go(i, quiet) {
     cur = (i + N) % N; layout();
-    if (!quiet) { animateCard(cur); shoot(cur, true); }
+    if (!quiet) animateCard(cur);
     if (auto) schedule();
   }
   function schedule() {
@@ -844,8 +780,8 @@ footer { padding-block: 2rem 2.5rem; }
   });
 
   var keepAuto = auto; auto = false;
-  go(0, true); shoot(0, false);
-  onView(deck, function () { auto = keepAuto; animateCard(0); shoot(0, true); if (auto) schedule(); }, .35);
+  go(0, true);
+  onView(deck, function () { auto = keepAuto; animateCard(0); if (auto) schedule(); }, .35);
 
   /* magnetic WhatsApp button */
   if (!reduce && matchMedia('(pointer: fine)').matches) {
