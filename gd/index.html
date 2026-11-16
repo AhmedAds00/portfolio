@@ -81,7 +81,7 @@ header.nav.solid{background:rgba(7,11,26,.78);backdrop-filter:blur(14px);border-
 .cta{display:inline-flex;align-items:center;gap:10px;background:var(--text);color:var(--ink);text-decoration:none;font-weight:600;padding:10px 20px;border-radius:999px;transition:transform .35s var(--ease),background .3s}
 .cta:hover{background:var(--accent)}
 .cta svg{width:16px;height:16px}
-@media (max-width:760px){.nav ul{display:none}}
+@media (max-width:760px){.nav ul li:not(.nc){display:none}.nav ul{gap:0}.nav .nc a{color:var(--text);border:1px solid var(--line);padding:8px 14px;border-radius:999px;font-size:14px}}
 
 /* hero */
 .hero{padding:128px 0 40px;position:relative}
@@ -112,6 +112,8 @@ header.nav.solid{background:rgba(7,11,26,.78);backdrop-filter:blur(14px);border-
 .hero-row p{font-size:clamp(18px,2vw,22px);max-width:34ch;color:var(--text);text-wrap:balance}
 .hero-row p em{font-style:normal;color:var(--accent)}
 .stats{display:flex;gap:34px;justify-content:flex-end;flex-wrap:wrap}
+.stat{text-decoration:none;color:inherit}
+a.stat:hover span{color:var(--accent)}
 .stat b{display:block;font-family:var(--display);font-size:clamp(34px,4vw,50px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
 .stat span{color:var(--muted);font-size:14px}
 @media (max-width:820px){.hero-row{grid-template-columns:1fr}.stats{justify-content:flex-start}}
@@ -128,6 +130,25 @@ header.nav.solid{background:rgba(7,11,26,.78);backdrop-filter:blur(14px);border-
 /* section heads */
 section{scroll-margin-top:80px}
 .sub{color:var(--muted);max-width:32ch}
+.head-side{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.ghost{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;border:1px solid var(--line);padding:10px 18px;border-radius:999px;transition:border-color .3s,background .3s,transform .4s var(--ease)}
+.ghost:hover{border-color:var(--accent);background:rgba(226,67,47,.12);transform:translateX(-4px)}
+.ghost svg{width:16px;height:16px}
+/* client cards */
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:1000px){.cgrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.cgrid{grid-template-columns:1fr;gap:12px}}
+.client{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:6px;padding:10px;border:1px solid var(--line);border-radius:22px;background:var(--panel);cursor:pointer;text-align:start;transition:border-color .4s,transform .5s var(--ease)}
+.client:hover,.client:focus-visible{border-color:var(--accent);transform:translateY(-6px)}
+.client .ph{aspect-ratio:1;border-radius:14px;overflow:hidden;background:var(--line)}
+.client .ph img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.client:hover .ph img{transform:scale(1.08)}
+.client .ph.solo{grid-column:span 2;aspect-ratio:2/1}
+.client .info{grid-column:span 2;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 6px 4px}
+.client .info b{font-family:var(--display);font-size:20px;font-weight:700;direction:ltr;display:block;text-align:right}
+.client .info small{color:var(--muted);font-size:14px}
+.client .cnt{flex:none;font-family:var(--display);font-weight:800;font-size:13px;color:var(--text);background:var(--accent);border-radius:999px;padding:5px 11px;direction:ltr}
+.sheet.open .client{animation:tileIn .8s var(--ease) both;animation-delay:calc(.25s + var(--i,0) * 60ms)}
 .head{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:30px}
 .kicker{font-family:var(--display);color:var(--accent);font-weight:700;font-size:14px;letter-spacing:.08em;direction:ltr;display:inline-flex;align-items:center;gap:10px}
 .kicker::before{content:"";width:34px;height:2px;background:linear-gradient(90deg,var(--blue),var(--accent));border-radius:2px}
@@ -292,7 +313,9 @@ html{-webkit-tap-highlight-color:transparent}
   .hero-row p{font-size:17px}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%}
   .stat{border:1px solid var(--line);border-radius:16px;padding:12px 10px}
-  .stat b{font-size:26px}
+  .stat{text-decoration:none;color:inherit}
+a.stat:hover span{color:var(--accent)}
+.stat b{font-size:26px}
   .stat span{font-size:12px;line-height:1.4;display:block;margin-top:4px}
   .reel-wrap{margin-top:24px;padding-block:14px}
   .reel{gap:10px}
@@ -310,6 +333,7 @@ html{-webkit-tap-highlight-color:transparent}
   .box{border-radius:24px}
   .box p{font-size:16px}
   .links{flex-direction:column}
+  .links a{width:100%}
   .links a{justify-content:center;padding:15px 18px}
   .links a span{display:none}
   footer .wrap{flex-direction:column;gap:4px;text-align:center}
@@ -344,7 +368,7 @@ html{-webkit-tap-highlight-color:transparent}
     <a class="logo" href="#top" aria-label="الرئيسية"><img src="logo.png" alt="" width="30" height="41"></a>
     <ul>
       <li><a href="#work">المجالات</a></li>
-      <li><a href="#clients">العملاء</a></li>
+      <li class="nc"><a href="#clients">العملاء</a></li>
       <li><a href="#services">بصمم إيه</a></li>
       <li><a href="#contact">تواصل</a></li>
     </ul>
@@ -359,9 +383,10 @@ html{-webkit-tap-highlight-color:transparent}
     <span class="eyebrow"><span class="dot"></span>متاح لمشاريع جديدة</span>
     <div class="hero-top">
       <h1 class="big">
-        <span class="w"><i style="animation-delay:1.95s">تصميمات</i></span>
-        <span class="w"><i class="gd" style="animation-delay:2.1s">بتصيب</i></span>
-        <span class="w"><i class="gd" style="animation-delay:2.25s">الهدف</i></span>
+        <span class="w"><i style="animation-delay:1.95s">الفكرة</i></span>
+        <span class="w"><i style="animation-delay:2.05s">تتشاف</i></span>
+        <span class="w"><i class="gd" style="animation-delay:2.2s">قبل ما</i></span>
+        <span class="w"><i class="gd" style="animation-delay:2.3s">تتقري</i></span>
       </h1>
       <div class="mark" aria-hidden="true"><div class="rings"><span></span><span></span><span></span></div><div class="tilt" id="markTilt"><img src="logo.png" alt="" width="449" height="620"></div></div>
     </div>
@@ -369,7 +394,7 @@ html{-webkit-tap-highlight-color:transparent}
       <p>أنا أحمد جلال، مصمم جرافيك. بصمم <em>سوشيال ميديا وإعلانات</em> تخلّي البراند يتشاف ويتباع، من المطاعم والعيادات لحد المنتجات وشركات التوصيل.</p>
       <div class="stats">
         <div class="stat"><b data-count="76">76</b><span>تصميم هنا</span></div>
-        <div class="stat"><b data-count="13">13</b><span>براند اشتغلت معاه</span></div>
+        <a class="stat" href="#clients"><b data-count="13">13</b><span>براند اشتغلت معاه ←</span></a>
         <div class="stat"><b data-count="3795">3795</b><span>متابع على إنستجرام</span></div>
       </div>
     </div>
@@ -384,19 +409,9 @@ html{-webkit-tap-highlight-color:transparent}
   <div class="wrap">
     <div class="head rv">
       <div><span class="kicker">SELECTED WORK</span><h2>شغلي حسب المجال</h2></div>
-      <p class="sub">دوس على أي مجال تشوف كل تصميماته.</p>
+      <div class="head-side"><p class="sub">دوس على أي مجال تشوف كل تصميماته.</p><a class="ghost" href="#clients">شوف العملاء <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a></div>
     </div>
     <div class="cats" id="cats"></div>
-  </div>
-</section>
-
-<section class="clients" id="clients">
-  <div class="wrap rv">
-    <span class="kicker">CLIENTS</span>
-    <h2>براندات صممتلها</h2>
-    <div class="names">
-      <span>Royal Watches</span><span>Aseo Oil</span><span>iDelivr</span><span>Damas Dental</span><span>Mohamed Naeem</span><span>Abu Selim</span><span>Focus Agency</span><span>Hatashi Media</span><span>Sigmaty</span><span>Express Delivery</span><span>Eldarsh Burger</span><span>Dr. Ahmed Nabil</span><span>Pizza House</span>
-    </div>
   </div>
 </section>
 
@@ -416,14 +431,11 @@ html{-webkit-tap-highlight-color:transparent}
     <div class="box rv">
       <img class="ring" src="logo.png" alt="" width="449" height="620"><span class="tgt" aria-hidden="true"></span>
       <h2>يلا نصمم<br>حاجة تتشاف.</h2>
-      <p>ابعتلي على إنستجرام أو تليجرام، واحكيلي عن البراند بتاعك والفكرة اللي في دماغك.</p>
+      <p>ابعتلي على إنستجرام، واحكيلي عن البراند بتاعك والفكرة اللي في دماغك.</p>
       <div class="links">
         <a href="https://www.instagram.com/ahmedgalalgd/" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
           إنستجرام <span>@ahmedgalalgd</span></a>
-        <a href="https://t.me/photoshopdowntown" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.3 2.9 11.5c-1 .4-1 1.6.1 1.9l4.7 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.5 4.9 3.6c.7.5 1.7.1 1.9-.7l3.2-15.2c.2-1.1-.8-2-1.9-1.6Zm-3.6 3.6-8.4 7.6-.3 3.2-1.4-4.6 10.1-6.2Z"/></svg>
-          تليجرام <span>t.me/photoshopdowntown</span></a>
       </div>
     </div>
   </div>
@@ -434,10 +446,10 @@ html{-webkit-tap-highlight-color:transparent}
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
   <div class="sheet-head"><div class="wrap">
-    <button class="back" id="shBack" aria-label="رجوع للمجالات"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg></button>
+    <button class="back" id="shBack" aria-label="رجوع"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg></button>
     <div><h2 id="shTitle"></h2><small id="shSub"></small></div>
   </div></div>
-  <div class="sheet-body"><div class="wrap"><div class="grid" id="grid"></div></div></div>
+  <div class="sheet-body"><div class="wrap"><div class="cgrid" id="cgrid" hidden></div><div class="grid" id="grid"></div></div></div>
 </div>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="عرض التصميم">
@@ -497,38 +509,102 @@ $("#cats").innerHTML = ORDER.map((k,i)=>{
   </button>`;
 }).join("");
 
-const sheet = $("#sheet"), grid = $("#grid");
-let list = [], openCat = null, catBtn = null;
-function openSheet(k, push){
-  openCat = k; list = byCat[k];
-  $("#shTitle").textContent = CAT_INFO[k].t;
-  $("#shSub").textContent = list.length + " تصميم · " + CAT_INFO[k].d;
+/* clients */
+const CLIENT_OF = it => it.en.startsWith("Damas") ? "Damas" : it.en;
+const CLIENT_INFO = {
+  "Abu Selim":["abu-selim","مطعم أبو سليم","مطاعم"],
+  "Mohamed Naeem":["mohamed-naeem","محمد نعيم للحوم","مطاعم ولحوم"],
+  "iDelivr":["idelivr","آي ديليفر","شحن وتوصيل"],
+  "Hatashi Media":["hatashi","هتاشي ميديا","خدمات سوشيال ميديا"],
+  "Royal Watches":["royal","ساعات رويال","منتجات"],
+  "Damas":["damas","مركز داماس لطب الأسنان","طبي"],
+  "Dr. Ahmed Nabil":["dr-nabil","د. أحمد نبيل زايد","طبي"],
+  "Focus Agency":["focus","وكالة فوكس","تسويق"],
+  "Pizza House":["pizza","مطعم بيتزا","مطاعم"],
+  "Eldarsh Burger":["eldarsh","برجر الدرش","مطاعم"],
+  "Aseo Oil":["aseo","اسيو أويل للزيوت","منتجات"],
+  "Express Delivery":["express","Express للشحن","شحن وتوصيل"],
+  "Sigmaty":["sigmaty","سنتر سيجماتي","تعليم"]
+};
+const byClient = {};
+ITEMS.forEach(it=>{ const c = CLIENT_OF(it); if(CLIENT_INFO[c]) (byClient[c] = byClient[c] || []).push(it); });
+const CLIENTS = Object.keys(byClient).sort((a,b)=>byClient[b].length-byClient[a].length);
+const SLUG = {}; CLIENTS.forEach(c=>SLUG[CLIENT_INFO[c][0]] = c);
+
+/* sheet views: category | clients | client */
+const sheet = $("#sheet"), grid = $("#grid"), cgrid = $("#cgrid");
+let list = [], view = null, catBtn = null;
+const HOME = ["","top","work","services","contact"];
+function keyOf(h){
+  if(byCat[h]) return h;
+  if(h==="clients") return h;
+  if(h.startsWith("client-") && SLUG[h.slice(7)]) return h;
+  return null;
+}
+function fillGrid(items){
+  list = items;
+  grid.hidden = false; cgrid.hidden = true;
   grid.innerHTML = list.map((it,i)=>`
     <div class="tile" tabindex="0" role="button" data-p="${i}" style="--i:${Math.min(i,16)}" aria-label="${it.en} - ${it.ar}">
       <img src="${it.src}" alt="${it.en} - ${it.ar}" loading="${i<8?'eager':'lazy'}" width="${it.w}" height="${it.h}">
       <div class="cap"><b>${it.en}</b><small>${it.ar}</small></div>
     </div>`).join("");
+}
+function render(k){
+  view = k;
+  if(byCat[k]){
+    $("#shTitle").textContent = CAT_INFO[k].t;
+    $("#shSub").textContent = byCat[k].length + " تصميم · " + CAT_INFO[k].d;
+    fillGrid(byCat[k]);
+  } else if(k==="clients"){
+    $("#shTitle").textContent = "العملاء";
+    $("#shSub").textContent = CLIENTS.length + " براند اشتغلت معاهم · دوس على أي براند تشوف شغله";
+    grid.hidden = true; cgrid.hidden = false;
+    cgrid.innerHTML = CLIENTS.map((c,i)=>{
+      const l = byClient[c], [slug, ar, field] = CLIENT_INFO[c];
+      const ph = l.length > 1
+        ? l.slice(0,2).map(x=>`<span class="ph"><img src="${x.src}" alt="" loading="${i<6?'eager':'lazy'}"></span>`).join("")
+        : `<span class="ph solo"><img src="${l[0].src}" alt="" loading="lazy"></span>`;
+      return `<button class="client" style="--i:${Math.min(i,12)}" data-s="${slug}" aria-label="${c} - ${l.length} تصميم">${ph}
+        <span class="info"><span><b>${c==="Damas"?"Damas Dental":c}</b><small>${ar} · ${field}</small></span><span class="cnt">${l.length}</span></span></button>`;
+    }).join("");
+  } else {
+    const c = SLUG[k.slice(7)], [, ar, field] = CLIENT_INFO[c];
+    $("#shTitle").textContent = ar;
+    $("#shSub").textContent = byClient[c].length + " تصميم · " + field;
+    fillGrid(byClient[c]);
+  }
   sheet.scrollTop = 0;
-  sheet.classList.add("open");
-  document.body.style.overflow = "hidden";
-  if(push && location.hash !== "#"+k){ try{ history.pushState(null,"","#"+k); }catch(e){ location.hash = k; } }
+  if(!sheet.classList.contains("open")){
+    sheet.classList.add("open");
+    document.body.style.overflow = "hidden";
+  } else {
+    sheet.classList.remove("swap"); void sheet.offsetWidth;
+    [...sheet.querySelectorAll(".tile,.client")].forEach(el=>{ el.style.animation="none"; void el.offsetWidth; el.style.animation=""; });
+  }
   setTimeout(()=>$("#shBack").focus({preventScroll:true}), 50);
 }
+function go(k){ if(location.hash !== "#"+k) location.hash = k; else render(k); }
 function closeSheet(){
-  if(!openCat) return;
-  openCat = null;
+  if(!view) return;
+  view = null;
   sheet.classList.remove("open");
   document.body.style.overflow = "";
   catBtn && catBtn.focus({preventScroll:true});
 }
-$("#cats").addEventListener("click", e=>{ const b = e.target.closest(".cat"); if(!b) return; catBtn = b; openSheet(b.dataset.k, true); });
-$("#shBack").onclick = () => { if(location.hash.slice(1) === openCat){ history.back(); } else closeSheet(); };
-addEventListener("popstate", syncHash);
+$("#cats").addEventListener("click", e=>{ const b = e.target.closest(".cat"); if(!b) return; catBtn = b; go(b.dataset.k); });
+cgrid.addEventListener("click", e=>{ const b = e.target.closest(".client"); if(b) go("client-" + b.dataset.s); });
+$("#shBack").onclick = () => {
+  if(view && view.startsWith("client-")){ location.hash = "clients"; return; }
+  try{ history.pushState(null,"",location.pathname + location.search); }catch(e){}
+  closeSheet();
+};
 addEventListener("hashchange", syncHash);
 function syncHash(){
-  const k = location.hash.slice(1);
-  if(byCat[k]){ if(openCat!==k) openSheet(k, false); }
-  else { if(lb.classList.contains("open")) closeLb(true); closeSheet(); }
+  const k = keyOf(location.hash.slice(1));
+  if(lb.classList.contains("open")) closeLb();
+  if(k){ if(view!==k) render(k); }
+  else closeSheet();
 }
 
 /* lightbox */
@@ -564,7 +640,7 @@ addEventListener("keydown", e=>{
     if(e.key==="Escape") closeLb();
     if(e.key==="ArrowLeft") show(pos+1, 1);
     if(e.key==="ArrowRight") show(pos-1, -1);
-  } else if(openCat && e.key==="Escape"){ $("#shBack").click(); }
+  } else if(view && e.key==="Escape"){ $("#shBack").click(); }
 });
 let sx = null, sy = null;
 lb.addEventListener("touchstart", e=>{ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
@@ -585,7 +661,7 @@ addEventListener("scroll", ()=>nav.classList.toggle("solid", scrollY>30), {passi
 if(!reduce){
   document.querySelectorAll("[data-count]").forEach(el=>{
     const end = +el.dataset.count, t0 = performance.now() + 2000, d = 1600;
-    const step = now => { const p = Math.min(Math.max((now-t0)/d,0),1); el.textContent = Math.round(end*(1-Math.pow(1-p,3))).toLocaleString("en-US"); if(p<1) requestAnimationFrame(step); };
+    const step = now => { if(now < t0){ requestAnimationFrame(step); return; } const p = Math.min(Math.max((now-t0)/d,0),1); el.textContent = Math.round(end*(1-Math.pow(1-p,3))).toLocaleString("en-US"); if(p<1) requestAnimationFrame(step); };
     requestAnimationFrame(step);
   });
 }
